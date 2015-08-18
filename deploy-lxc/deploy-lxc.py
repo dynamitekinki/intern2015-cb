@@ -26,8 +26,7 @@ def ExecuteSocat(name):
     """
 
     # コンテナ生成時はsocatが存在しないのでインストール
-    subprocess.check_call(["sudo", "apt-get", "-y",
-                           "install", "socat",])
+    subprocess.check_call(["sudo", "apt-get", "install", "-y", "socat",])
 
     subprocess.check_call(["sudo", "lxc-attach",
                            "-n", name, "--", #この後，コンテナでの実行コマンド

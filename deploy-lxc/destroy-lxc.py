@@ -11,11 +11,15 @@ def main():
     args = parser.parse_args()
 
     name = args.name
-
-    subprocess.check_call(["sudo", "lxc-stop",
-                           "-n", name,])
-    subprocess.check_call(["sudo", "lxc-destroy",
-                           "-n", name,])
+    
+    try:
+        subprocess.check_call(["sudo", "lxc-stop",
+                               "-n", name,])
+    except:
+        print "lxc-stop failed!"
+    finally:
+        subprocess.check_call(["sudo", "lxc-destroy",
+                               "-n", name,])
 
 if __name__ == '__main__':
     main()
