@@ -17,9 +17,12 @@ def main():
                                "-n", name,])
     except:
         print "lxc-stop failed!"
-    finally:
+    
+    try:
         subprocess.check_call(["sudo", "lxc-destroy",
                                "-n", name,])
+    except:
+        print "lxc-destroy failed!"
 
 if __name__ == '__main__':
     main()
