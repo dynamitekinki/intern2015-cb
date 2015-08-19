@@ -6,9 +6,7 @@ import re
 from socket import gethostname
 from subprocess import check_output
 
-
 MEM_INFO_PATTERN = re.compile('^([^ ]+): *([0-9]+) ?([A-Za-z]+)?$')
-
 
 def main():
     mem_info_output = check_output(['/bin/cat', '/proc/meminfo'])
@@ -34,7 +32,6 @@ def main():
     print('Content-Length: {}'.format(len(result) + 1))
     print()
     print(result)
-
 
 if __name__ == '__main__':
     main()
