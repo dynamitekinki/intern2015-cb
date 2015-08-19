@@ -3,28 +3,25 @@
 
 import json
 import re
+from datetime import datetime
 from socket import gethostname
 from subprocess import check_output
 
-MEM_INFO_PATTERN = re.compile('^([^ ]+): *([0-9]+) ?([A-Za-z]+)?$')
-
 def main():
-    mem_info_output = check_output(['/bin/cat', '/proc/meminfo'])
-
-    for line in mem_info_output.splitlines():
-        m = MEM_INFO_PATTERN.match(line.decode('utf8'))
-        if m.group(1) == 'MemFree':
-            unit = m.group(3)
-            scale = 1
-            if unit == 'kB':
-                scale = 1024
-            else:
-                raise ValueError('Unknown unit: ' + unit)
-            mem_free = int(m.group(2)) * scale
+    # uptimeコマンドでloadaverageを確認
+    uptime_output = check_output(['/usr/bin/uptime'])
+    uptime_output = uptime_output.decode('utf8')
+    uptime_list = filter(lambda w: len(w) > 0, re.split(r'\s| |,|\n', uptime_output))
+    
+    d = datetime.today()
+    date_str = d.strftime("%Y-%m-%d %H:%M:%S")
 
     result = json.dumps({
         'hostname': gethostname(),
-        'memfree': mem_free
+        'date': date_str,
+        '1min-average': uptime_list[7],
+        '5min-average': [8],
+        '15min-average': load_average[9],
     })
 
     print('HTTP/1.1 200 OK')

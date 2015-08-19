@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import json
 import re
@@ -11,6 +11,7 @@ MEM_INFO_PATTERN = re.compile('^([^ ]+): *([0-9]+) ?([A-Za-z]+)?$')
 
 def main():
     mem_info_output = check_output(['/bin/cat', '/proc/meminfo'])
+    mem_info_output = mem_info_output.decode('utf-8')
 
     for line in mem_info_output.splitlines():
         m = MEM_INFO_PATTERN.match(line)
@@ -28,11 +29,11 @@ def main():
         'memfree': mem_free
     })
 
-    print 'HTTP/1.1 200 OK'
-    print 'Content-Type: application/json'
-    print 'Content-Length: {}'.format(len(result) + 1)
-    print
-    print result
+    print('HTTP/1.1 200 OK')
+    print('Content-Type: application/json')
+    print('Content-Length: {}'.format(len(result) + 1))
+    print()
+    print(result)
 
 
 if __name__ == '__main__':
