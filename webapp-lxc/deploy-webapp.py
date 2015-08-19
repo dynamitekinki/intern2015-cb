@@ -1,8 +1,7 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 
 import time
-import sys
+# import sys
 import subprocess
 
 def CreateContainer(dist, name):
@@ -10,7 +9,6 @@ def CreateContainer(dist, name):
     dist : ディストリビューション名
     name : コンテナ名
     """
-
     subprocess.check_call(["sudo", "lxc-create",
                            "-t", dist,
                            "-n", name,])
@@ -29,7 +27,6 @@ def ExecuteSocat(name):
     """
     name : コンテナ名
     """
-
     # コンテナ生成時はsocatが存在しないのでインストール
     subprocess.check_call(["sudo", "lxc-attach",
                            "-n", name, "--",
