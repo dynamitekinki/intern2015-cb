@@ -71,19 +71,17 @@ def main():
 
     CreateContainer("ubuntu", "ubuntu-ap1")
     CreateContainer("ubuntu", "ubuntu-ap2")
-    CreateContainer("ubuntu", "ubuntu-ap3")
+    CreateContainer("ubuntu", "ubuntu-nginx")
 
     StartContainer("ubuntu-ap1")
     StartContainer("ubuntu-ap2")
-    StartContainer("ubuntu-ap3")
+    StartContainer("ubuntu-nginx")
 
     PutFileToContainer("ubuntu-ap1", EXECUTE_PATH + "/webapp.py", "/usr/local/bin/")
     PutFileToContainer("ubuntu-ap2", EXECUTE_PATH + "/webapp.py", "/usr/local/bin/")
-    PutFileToContainer("ubuntu-ap3", EXECUTE_PATH + "/webapp.py", "/usr/local/bin/")
 
     ExecuteWebapp("ubuntu-ap1")
     ExecuteWebapp("ubuntu-ap2")
-    ExecuteWebapp("ubuntu-ap3")
 
 if __name__ == '__main__':
     main()

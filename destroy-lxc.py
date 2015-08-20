@@ -12,7 +12,7 @@ def main():
 
     conteiners = args.names
 
-    flag = true
+    flag = True
     
     # 引数に入ったすべてのコンテナを削除
     # 一回でも例外が発生した場合異常終了とする．
@@ -37,7 +37,7 @@ def main():
             print 'message:' + e.message
             flag = false
 
-    if !flag:
+    if not flag:
         sys.exit(1)
 
 if __name__ == '__main__':
