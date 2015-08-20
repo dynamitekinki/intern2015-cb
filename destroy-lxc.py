@@ -25,7 +25,7 @@ def main():
             print 'type:' + str(type(e))
             print 'args:' + str(e.args)
             print 'message:' + e.message
-            flag = false
+            flag = False
     
         try:
             subprocess.check_call(["sudo", "lxc-destroy",
@@ -35,7 +35,7 @@ def main():
             print 'type:' + str(type(e))
             print 'args:' + str(e.args)
             print 'message:' + e.message
-            flag = false
+            flag = False
 
     if not flag:
         sys.exit(1)
