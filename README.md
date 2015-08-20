@@ -7,3 +7,6 @@
 
 ## 3日目 - LXCを用いたWebアプリ -
 - webapp-lxc
+
+## 4日目 - LXCを用いたロードバランサ -
+- load-balance
