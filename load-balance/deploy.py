@@ -33,7 +33,7 @@ def PutFileToContainer(name, src, dst):
     dst_path = "/var/lib/lxc/" + name + "/rootfs/" + dst
     subprocess.check_call(["sudo", "cp", src, dst_path])
 
-def CheckRepository():
+def CheckNetworkConnection(name):
     TTL = 60 # ネットワーク接続がエラー時，タイムアウトするまでの時間
     
     # ネットワークに接続可能かの確認をTTLまでの間実行
@@ -56,8 +56,8 @@ def ExecuteNginx(name):
     Nginxを起動する
     name : コンテナ名
     """
-    CheckRepository()
-
+    CheckNetworkConnection(name)
+    
     # コンテナ生成時はnginxが存在しないのでインストール
     subprocess.check_call(["sudo", "lxc-attach",
                            "-n", name, "--",
@@ -67,13 +67,22 @@ def ExecuteNginx(name):
                            "-n", name, "--",
                            "sudo", "service", "nginx", "start",])
 
+def RestartNginx(name)
+    """
+    Nginxをリスタートする
+    name : コンテナ名
+    """
+    subprocess.check_call(["sudo", "lxc-attach",
+                           "-n", name, "--",
+                           "sudo", "service", "nginx", "restart",])
+
+
 def ExecuteWebapp(name):
     """
     Webアプリをsocatで起動する
     name : コンテナ名
     """
-    
-    CheckRepository()
+    CheckNetworkConnection(name)
 
     # コンテナ生成時はsocatが存在しないのでインストール
     subprocess.check_call(["sudo", "lxc-attach",
@@ -98,10 +107,13 @@ def main():
 
     PutFileToContainer("ubuntu-ap1", EXECUTE_PATH + "/webapp.py", "/usr/local/bin/webapp.py")
     PutFileToContainer("ubuntu-ap2", EXECUTE_PATH + "/webapp.py", "/usr/local/bin/webapp.py")
-    PutFileToContainer("ubuntu-nginx", EXECUTE_PATH + "/default.conf", "/etc/nginx/sites-available/default")
 
     ExecuteWebapp("ubuntu-ap1")
     ExecuteWebapp("ubuntu-ap2")
+    
+    ExecuteNginx("ubuntu-nginx")
+    PutFileToContainer("ubuntu-nginx", EXECUTE_PATH + "/default.conf", "/etc/nginx/sites-available/default")
+
 
 if __name__ == '__main__':
     main()

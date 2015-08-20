@@ -8,11 +8,11 @@ from socket import gethostname
 from subprocess import check_output
 
 def main():
-    # uptime$B%3%^%s%I$G(Bloadaverage$B$r3NG'(B
+    # uptimeコマンドでloadaverageを確認
     uptime_output = check_output(['/usr/bin/uptime'])
     uptime_output = uptime_output.decode('utf8')
 
-    # $B%9%Z!<%9!$%+%s%^!$2~9TJ8;z$r6h@Z$j$H$7$F(Bsplit
+    # スペース，カンマ，改行文字を区切りとしてsplit
     uptime_list = list(filter(lambda w: len(w) > 0, re.split(r'\s| |,|\n', uptime_output)))
     
     d = datetime.today()
