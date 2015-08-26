@@ -5,7 +5,7 @@ import argparse
 import subprocess
 
 def main():
-    # $B0z?t$r%A%'%C%/(B
+    # 引数をチェック
     parser = argparse.ArgumentParser()
     parser.add_argument('names', metavar='CONTEINER_NAME', nargs='+', help='stop and destroy conteiners.')
     args = parser.parse_args()
@@ -14,14 +14,14 @@ def main():
 
     flag = True
     
-    # $B0z?t$KF~$C$?$9$Y$F$N%3%s%F%J$r:o=|(B
-    # $B0l2s$G$bNc30$,H/@8$7$?>l9g0[>o=*N;$H$9$k!%(B
+    # 引数に入ったすべてのコンテナを削除
+    # 一回でも例外が発生した場合異常終了とする．
     for name in conteiners:
         try:
             subprocess.check_call(["sudo", "lxc-stop",
                                    "-n", name,])
         except Exception as e:
-            print '=== $B%(%i!<FbMF(B ==='
+            print '=== エラー内容 ==='
             print 'type:' + str(type(e))
             print 'args:' + str(e.args)
             print 'message:' + e.message
@@ -31,7 +31,7 @@ def main():
             subprocess.check_call(["sudo", "lxc-destroy",
                                    "-n", name,])
         except Exception as e:
-            print '=== $B%(%i!<FbMF(B ==='
+            print '=== エラー内容 ==='
             print 'type:' + str(type(e))
             print 'args:' + str(e.args)
             print 'message:' + e.message

@@ -5,29 +5,29 @@ import argparse
 import subprocess
 
 def main():
-    # $B0z?t$r%A%'%C%/(B
+    # 引数をチェック
     parser = argparse.ArgumentParser()
     parser.add_argument('pattern', metavar='PATTERN', help='print lines containing this pattern.')
     args = parser.parse_args()
     
     pattern = args.pattern
     
-    # "ls /etc"$B$r<B9T!%I8=`=PNO$r%Q%$%W$X(B
+    # "ls /etc"を実行．標準出力をパイプへ
     proc = subprocess.Popen(['/bin/ls', '/etc'],
             stdout=subprocess.PIPE,
             )
 
 
     
-    # $B=PNO$r$$$C$?$sJ8;zNs$X(B
+    # 出力をいったん文字列へ
     ls_str = proc.communicate()[0]
     
-    # $BJ8;zNs$rJ,3d$7!$%j%9%H$X3JG<(B
+    # 文字列を分割し，リストへ格納
     ls_list = ls_str.split()
     
-    # $B%j%9%H$G%k!<%W(B
+    # リストでループ
     for element in ls_list:
-        if pattern in element:  # $BMWAG$K8!:w%Q%?!<%s$,4^$^$l$F$$$l$P=PNO(B
+        if pattern in element:  # 要素に検索パターンが含まれていれば出力
             print element
     
 if __name__ == '__main__':
